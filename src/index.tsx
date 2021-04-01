@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { SelectionPage } from './components/SelectionPage';
 import { LoginPage } from './components/LoginPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import { RacePage } from './components/RacePage';
 
 
 export const App = () => {
@@ -17,7 +17,10 @@ export const App = () => {
         <Route exact path="/">
           <LoginPage />
         </Route>
-        <Route path="/*">
+        <Route path="/race/:id">
+          <RacePage />
+        </Route>
+        <Route exact path="/frontpage">
           <SelectionPage />
         </Route>
       </Switch>

@@ -1,10 +1,15 @@
-import { AppBar, Grid, makeStyles, Toolbar} from "@material-ui/core";
+import { AppBar, Grid, IconButton, makeStyles, Menu, MenuItem, Toolbar, fade, Typography, InputBase, Button, Link,} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { DriversList } from "./DriversList";
 import { Podium } from "./Podium";
 import bgImage from '../media/f1bg.svg';
 import logo from '../media/f1ntasy_nofont.svg';
 import fetch from 'node-fetch';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import { HeaderBar } from "./HeaderBar";
 export type Driver = {
     fname: string,
     lname: string,
@@ -21,6 +26,8 @@ export type Driver = {
     teamname: string
 }
 
+
+
 const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: `url(${bgImage})`,
@@ -30,6 +37,25 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(45),
     },
     toolbar: {
+        height: theme.spacing(5)
+    },
+    menuButton: {
+        marginRight: theme.spacing(2)
+    },
+    appBar: {
+        flexGrow: 1
+    },
+    root: {
+        flexGrow: 1,
+    },
+    title: {
+        flexGrow: 1,
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+            display: 'block',
+        },
+    },
+    icon: {
         height: theme.spacing(5)
     }
 }));
@@ -62,6 +88,9 @@ export const SelectionPage = (props: any) => {
     
     const [top5, setTop5] = useState(Array<Driver>(5));
     const [selectedPosition, setSelectedPosition] = useState(-1);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
     const classes = useStyles();
 
     useEffect(() => {
@@ -72,6 +101,8 @@ export const SelectionPage = (props: any) => {
         })
     },[])
 
+
+    
     function handleDriverClicked( driver: Driver){
         if(selectedPosition > -1){
             
@@ -122,14 +153,9 @@ export const SelectionPage = (props: any) => {
     return (
         
         <div className={classes.image}>
-
+            <HeaderBar />
             <Grid container>
-                <AppBar position="static">
-                    
-                    <Toolbar className={classes.toolbar}>
-                    <img src={logo} className={classes.logo}></img>
-                    </Toolbar>
-                </AppBar>
+                
                 <Grid item xs={6}>
                 
                     <DriversList click={handleDriverClicked} drivers={drivers} />
