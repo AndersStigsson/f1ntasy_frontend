@@ -21,7 +21,8 @@ export type Driver = {
     top5: boolean, 
     guessedPosition: number,
     logo:string,
-    teamname: string
+    teamname: string,
+    id: number
 }
 
 
@@ -64,10 +65,7 @@ export const SelectionPage = (props: any) => {
     const { drivers, setDrivers } = UseDrivers();
     const { top5, setTop5} = UseTop5();
     const {selectedPosition, setSelectedPosition, handlePodiumClicked} = UseSelectedPosition();
-    // const [top5, setTop5] = useState(Array<Driver>(5));
-    // const [selectedPosition, setSelectedPosition] = useState(-1);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+
 
     const classes = useStyles();
 
@@ -101,9 +99,9 @@ export const SelectionPage = (props: any) => {
 
             setDrivers(
                 drivers.map(item => 
-                    item.lname === driver.lname 
+                    item.id === driver.id 
                     ? {...item, top5 : driver.top5} 
-                    : prevDriverOnPosition !== undefined && item.lname === prevDriverOnPosition.lname 
+                    : prevDriverOnPosition !== undefined && item.id === prevDriverOnPosition.id 
                     ? {...item, top5: !prevDriverOnPosition.top5}
                     : item 
             ));

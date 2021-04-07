@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        color: "#FFFFFF",
+        textDecoration: "none"
     },
     icon: {
         height: theme.spacing(5)
@@ -77,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
+    nextRace: {
+        color: "#FFFFFF",
+        textDecoration: "none"
+    }
 }));
 
 export const HeaderBar = () => {
@@ -141,9 +147,13 @@ export const HeaderBar = () => {
                     <MenuIcon />
                 </IconButton>
                 <Link href="/frontpage"> <img src={logo} className={classes.logo}></img></Link>
-                <Typography className={classes.title} variant="h6" noWrap>
-                    Next race: {nextRace?.name} on {nextRace?.date.replace("T", " ").substring(0,16)}
-                </Typography>
+                
+                    <Typography className={classes.title} variant="h6" noWrap >
+                        <Link  href={`/race/${nextRace?.id}`} className={classes.nextRace}>
+                            Next race: {nextRace?.name} on {nextRace?.date.replace("T", " ").substring(0,16)}
+                        </Link>
+                    </Typography>
+                
                 <Link href={"/standings"} className={classes.headerBarDesktop}>
                     <Button 
                         className={classes.headerText}
