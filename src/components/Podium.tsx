@@ -4,8 +4,9 @@ import { Driver } from "./SelectionPage";
 import { PodiumPlace } from "./PodiumPlace";
 interface PodiumProps{
     drivers: Driver[];
-    click: (position: number) => void;
+    click: (position: number, setSelectedPosition: any) => void;
     selectedPosition: number;
+    handleSelectedPosition: any;
 };
 
 const useStyles = makeStyles({
@@ -26,11 +27,11 @@ export const Podium = (props: PodiumProps) => {
     var j = 0;
     return(
         <Grid container>
-            <PodiumPlace selectedPosition={position} click={props.click} position={0} driver={drivers[0]}></PodiumPlace>
-            <PodiumPlace selectedPosition={position} click={props.click} position={1} driver={drivers[1]}></PodiumPlace>
-            <PodiumPlace selectedPosition={position} click={props.click} position={2} driver={drivers[2]}></PodiumPlace>
-            <PodiumPlace selectedPosition={position} click={props.click} position={3} driver={drivers[3]}></PodiumPlace>
-            <PodiumPlace selectedPosition={position} click={props.click} position={4} driver={drivers[4]}></PodiumPlace>
+            <PodiumPlace selectedPosition={position} handleSelectedPosition={props.handleSelectedPosition} click={props.click} position={0} driver={drivers[0]}></PodiumPlace>
+            <PodiumPlace selectedPosition={position} handleSelectedPosition={props.handleSelectedPosition} click={props.click} position={1} driver={drivers[1]}></PodiumPlace>
+            <PodiumPlace selectedPosition={position} handleSelectedPosition={props.handleSelectedPosition} click={props.click} position={2} driver={drivers[2]}></PodiumPlace>
+            <PodiumPlace selectedPosition={position} handleSelectedPosition={props.handleSelectedPosition} click={props.click} position={3} driver={drivers[3]}></PodiumPlace>
+            <PodiumPlace selectedPosition={position} handleSelectedPosition={props.handleSelectedPosition} click={props.click} position={4} driver={drivers[4]}></PodiumPlace>
         </Grid>
     )
 }

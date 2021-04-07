@@ -8,10 +8,23 @@ import { SelectionPage } from './components/SelectionPage';
 import { LoginPage } from './components/LoginPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { RacePage } from './components/RacePage';
+import { Results } from './components/Results';
+import { RaceListPage } from './components/RaceListPage';
+import { makeStyles } from '@material-ui/core';
+import bgImage from './media/f1bg.svg';
 
+const useStyles = makeStyles((theme) => ({
+  image: {
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: "cover",
+      height: "100vh"
+  },
+}));
 
 export const App = () => {
+  const classes = useStyles();
 	return(
+    <div className={classes.image}>
     <Router>
       <Switch>
         <Route exact path="/">
@@ -20,13 +33,23 @@ export const App = () => {
         <Route path="/race/:id">
           <RacePage />
         </Route>
+        <Route exact path="/races">
+          <RaceListPage />
+        </Route>
+        <Route path="/results/:id">
+          <RacePage />
+        </Route>
         <Route exact path="/frontpage">
           <SelectionPage />
+        </Route>
+        <Route path="/standings">
+          <Results>
+          </Results>
         </Route>
       </Switch>
       
     </Router>
-    
+    </div>
   )
 }
 

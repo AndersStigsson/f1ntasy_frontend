@@ -3,7 +3,7 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Driver } from "./SelectionPage";
 import { SaveButton } from "./SaveButton";
-
+import { DriverCard } from './DriverCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,23 +15,7 @@ const useStyles = makeStyles((theme) => ({
   top5: {
       backgroundColor: "#C4C4C4"
   },
-  flag: {
-        width: theme.spacing(6),
-        height: theme.spacing(6),
-  },
-  driverHead:{
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-  },
-  driverListItem: {
-      backgroundColor: "rgb(0,0,0,0.7)",
-      '&:hover' : {
-        backgroundColor: 'rgb(0,29,54)',
-      }
-  },
-  driverListItemText: {
-      color: "#C4C4C4"
-  }
+
 }));
 
 
@@ -62,26 +46,3 @@ export const DriversList = (props : any) => {
 }
 
 
-export const DriverCard = (props: any) => {
-    const classes = useStyles();
-    var driver = props.driver;
-
-    function handleClick(){
-        props.click(driver); 
-    }
-    
-    return(
-        <ListItem onClick={handleClick} className={classes.driverListItem}>
-            <ListItemAvatar>
-                <Avatar src={props.image} className={classes.driverHead}>
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText className={classes.driverListItemText}>
-            {props.name}, {props.team}
-            </ListItemText>
-            <Avatar variant="square" src={driver.flag}>
-            </Avatar>
-            
-        </ListItem>
-    )
-}

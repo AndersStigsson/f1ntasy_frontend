@@ -1,10 +1,10 @@
-import { Button, Card, CardActionArea, CardMedia, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
+import { Button, Card, CardActionArea, CardMedia, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import logo from '../media/f1ntasy_nofont.svg';
 import fetch from 'node-fetch';
 import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     LoginPage: {
         // height: "300px",
         // width: "550px"
@@ -13,11 +13,17 @@ const useStyles = makeStyles({
     loginButton: {
         // marginTop: "50px",
         // marginLeft: "50px"
+        paddingTop: theme.spacing(2),
+        paddingLeft: theme.spacing(2)
     },
     media: {
-         height: "200px",
+        height: theme.spacing(24),
+        [theme.breakpoints.down('sm')]: {
+            height: theme.spacing(12),
+        },
+
     }
-});
+}));
 
 
 export const LoginPage = (props: any) => {
@@ -67,9 +73,9 @@ export const LoginPage = (props: any) => {
         <Grid container>
         
         
-            <Grid item xs={3}>
+            <Grid item md={3}>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
                 <Card className={classes.LoginPage}>
                     <CardActionArea>
                         <CardMedia
@@ -91,8 +97,8 @@ export const LoginPage = (props: any) => {
                                 
                             </TextField>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Button variant="contained" onClick={handleLogin} className={classes.loginButton}>
+                        <Grid item xs={12} className={classes.loginButton}>
+                            <Button variant="contained" onClick={handleLogin} >
                                 Log in
                             </Button>
                         </Grid>
@@ -100,7 +106,7 @@ export const LoginPage = (props: any) => {
                 </Card>
                 
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3}>
 
             </Grid>
         </Grid>

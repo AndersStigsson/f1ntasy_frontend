@@ -5,8 +5,9 @@ import { Driver } from "./SelectionPage";
 interface PodiumPlaceProps {
     position: number;
     driver: Driver;
-    click: (position: number) => void;
+    click: (position: number, handleSelectedPosition: any) => void;
     selectedPosition: number;
+    handleSelectedPosition: any;
 }
 
 const positions: string[] = ["1st", "2nd", "3rd", "4th", "5th"]
@@ -88,7 +89,7 @@ export const PodiumPlace = (props: PodiumPlaceProps) => {
     const classes = useStyles();
     const selected = props.position === props.selectedPosition;
     function handlePodiumClicked(){
-        props.click(props.position);
+        props.click(props.position, props.handleSelectedPosition);
     }
 
     let positionClasses : any = [classes.first, classes.second, classes.third, classes.fourth, classes.fifth]
@@ -141,8 +142,8 @@ export const PodiumPlace = (props: PodiumPlaceProps) => {
                             className={teamClasses[props.driver.team]}
                             
                             >
-                                <img alt="image of driver" src={props.driver.image}></img>
-                                <img alt="logo for team" src={props.driver.logo} className={classes.logo}></img>
+                                <img alt="driver" src={props.driver.image}></img>
+                                <img alt="team" src={props.driver.logo} className={classes.logo}></img>
                             <Typography>Name: {`${props.driver.fname} ${props.driver.lname}`}</Typography>
                             <Typography>Team: {props.driver.teamname}</Typography>
                         </CardMedia>

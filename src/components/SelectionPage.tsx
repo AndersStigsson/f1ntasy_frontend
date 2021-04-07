@@ -1,15 +1,13 @@
-import { AppBar, Grid, IconButton, makeStyles, Menu, MenuItem, Toolbar, fade, Typography, InputBase, Button, Link,} from "@material-ui/core";
+import { Grid, makeStyles} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { DriversList } from "./DriversList";
 import { Podium } from "./Podium";
 import bgImage from '../media/f1bg.svg';
-import logo from '../media/f1ntasy_nofont.svg';
 import fetch from 'node-fetch';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { HeaderBar } from "./HeaderBar";
+import { UseDrivers } from "./UseDrivers";
+import { UseTop5 } from "./UseTop5";
+import { UseSelectedPosition } from "./UseSelectedPosition";
 export type Driver = {
     fname: string,
     lname: string,
@@ -63,43 +61,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const SelectionPage = (props: any) => {
 
-    const [drivers, setDrivers] = useState([
-        {fname: "Lewis", lname:"Hamilton", country: "", short: "", url:"", flag: "", team : "mer", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0}, 
-        {fname: "Max", lname:"Verstappen", country: "", short: "", url:"", flag: "", team: "rbr", teamname: "", logo: "", image:"" , top5: false, guessedPosition: 0},
-        {fname: "Valtteri", lname:"Bottas", country: "", short: "", url:"", flag: "", team: "mer", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Sergio", lname:"Perez", country: "", short: "", url:"", flag: "", team: "rbr", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Lando", lname:"Norris", country: "", short: "", url:"", flag: "", team: "mcl", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Daniel", lname:"Ricciardo", country: "", short: "", url:"", flag: "", team: "mcl", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Lance", lname:"Stroll", country: "", short: "", url:"", flag: "", team: "amr", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Sebastian", lname:"Vettel", country: "", short: "", url:"", flag: "", team: "amr", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Esteban", lname:"Ocon", country: "", short: "", url:"", flag: "", team: "aft", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Fernando", lname:"Alonso", country: "", short: "", url:"", flag: "", team: "aft", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Charles", lname:"Leclerc", country: "", short: "", url:"", flag: "", team: "fer", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Carlos", lname:"Sainz", country: "", short: "", url:"", flag: "", team: "fer", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Pierre", lname:"Gasly", country: "", short: "", url:"", flag: "", team: "sat", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Yuki", lname:"Tsunoda", country: "", short: "", url:"", flag: "", team: "sat", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Kimi", lname:"Raikkonen", country: "", short: "", url:"", flag: "", team: "arr", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Antonio", lname:"Giovinazzi", country: "", short: "", url:"", flag: "", team: "arr", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Mick", lname:"Schumacher", country: "", short: "", url:"", flag: "", team: "hft", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Nikita", lname:"Mazepin", country: "", short: "", url:"", flag: "", team: "hft", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "George", lname:"Russell", country: "", short: "", url:"", flag: "", team: "wil", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-        {fname: "Nicholas", lname:"Latifi", country: "", short: "", url:"", flag: "", team: "wil", teamname: "", logo: "", image:"", top5: false, guessedPosition: 0},
-    ]);
-    
-    const [top5, setTop5] = useState(Array<Driver>(5));
-    const [selectedPosition, setSelectedPosition] = useState(-1);
+    const { drivers, setDrivers } = UseDrivers();
+    const { top5, setTop5} = UseTop5();
+    const {selectedPosition, setSelectedPosition, handlePodiumClicked} = UseSelectedPosition();
+    // const [top5, setTop5] = useState(Array<Driver>(5));
+    // const [selectedPosition, setSelectedPosition] = useState(-1);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const classes = useStyles();
-
-    useEffect(() => {
-        fetch("http://f1ntasy.com:3001/api/drivers/all")
-        .then(res => res.json())
-        .then(json => {
-            setDrivers(json.drivers);
-        })
-    },[])
 
 
     
@@ -147,9 +117,9 @@ export const SelectionPage = (props: any) => {
         }
         
     }
-    function handlePodiumClicked(position: number){
-        setSelectedPosition(position);
-    }
+    // function handlePodiumClicked(position: number){
+    //     setSelectedPosition(position);
+    // }
     return (
         
         <div className={classes.image}>
@@ -161,7 +131,7 @@ export const SelectionPage = (props: any) => {
                     <DriversList click={handleDriverClicked} drivers={drivers} />
                 </Grid>
                 <Grid item xs={6}>
-                    <Podium click={handlePodiumClicked} drivers={top5} selectedPosition={selectedPosition}/>
+                    <Podium click={handlePodiumClicked} handleSelectedPosition={setSelectedPosition} drivers={top5} selectedPosition={selectedPosition}/>
                 </Grid>
             </Grid>
         </div>
