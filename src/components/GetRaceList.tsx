@@ -7,6 +7,7 @@ interface Race {
     country: string;
     date: string;
     url : string;
+    circuitmap: string;
 }
 
 export const UseRaceList = () =>  {

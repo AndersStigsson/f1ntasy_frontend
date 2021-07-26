@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import StorageIcon from '@material-ui/icons/Storage';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import { UseRaceList } from "./GetRaceList";
+import { UseTeamList } from "./UseTeams";
 interface Race {
     id: number;
     name: string;
@@ -89,16 +90,21 @@ export const HeaderBar = () => {
     // const [raceList, setRaceList] = useState<Race[]>([]);
 
     const [nextRace, setNextRace] = useState<Race>();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorElRaces, setAnchorElRaces] = useState<null | HTMLElement>(null);
+    const [anchorElTeams, setAnchorElTeams] = useState<null | HTMLElement>(null);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const open = Boolean(anchorEl);
+    const openTeams = Boolean(anchorElTeams);
+    const openRaces = Boolean(anchorElRaces);
     const classes = useStyles();
     const {raceList} = UseRaceList();
-    console.log(`After UseRaceList: ${raceList}`);
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const {teamList} = UseTeamList();
+    const handleMenuRaces = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElRaces(event.currentTarget);
     };
 
+    const handleMenuTeams = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElTeams(event.currentTarget);
+    };
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -110,7 +116,8 @@ export const HeaderBar = () => {
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setAnchorElRaces(null);
+        setAnchorElTeams(null);
     }
   
     const handleDrawerClose = () => {
@@ -118,11 +125,6 @@ export const HeaderBar = () => {
     };
 
     useEffect(() => {
-        // fetch("http://f1ntasy.com:3001/api/races/all")
-        // .then(res => res.json())
-        // .then(json => {
-        //     setRaceList(json.races);
-        // });
         fetch("http://f1ntasy.com:3001/api/races/next")
         .then(res => res.json())
         .then(json => {
@@ -142,7 +144,7 @@ export const HeaderBar = () => {
                 aria-label="open drawer"
                 onClick={handleDrawerOpen}
                 edge="start"
-                className={clsx(classes.menuButton, open && classes.hide)}
+                className={clsx(classes.menuButton, (openTeams || openRaces) && classes.hide)}
                 >
                     <MenuIcon />
                 </IconButton>
@@ -150,7 +152,7 @@ export const HeaderBar = () => {
                 
                     <Typography className={classes.title} variant="h6" noWrap >
                         <Link  href={`/race/${nextRace?.id}`} className={classes.nextRace}>
-                            Next race: {nextRace?.name} on {nextRace?.date.replace("T", " ").substring(0,16)}
+                            Next race: {nextRace?.name} on {nextRace !== undefined && new Date(nextRace?.date).toLocaleString("SV-SE").substring(0,16)}
                         </Link>
                     </Typography>
                 
@@ -162,10 +164,34 @@ export const HeaderBar = () => {
                     </Button>
                 </Link>
                 <Button
+                    aria-label="Teams"
+                    aria-controls="menu-appbar-teams"
+                    aria-haspopup="true"
+                    onClick={handleMenuTeams}
+                    color="inherit"
+                    className={`${classes.icon} ${classes.headerBarDesktop}`}
+                    // variant="h5"
+                    // component="span"
+                >
+                    Teams
+                    <KeyboardArrowDownIcon ></KeyboardArrowDownIcon>
+                </Button>
+                <Menu
+                    id="menu-appbar-teams"
+                    anchorEl={anchorElTeams}
+                    open={openTeams}
+                    onClose={handleClose}
+                >
+                    {teamList.map((team, index) => {
+                        return <Link key={team.short} href={`/team/${team.short}`}><MenuItem  onClick={handleClose}>{team.name}</MenuItem></Link>
+                    })}
+                    
+                </Menu>
+                <Button
                     aria-label="account of current user"
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
-                    onClick={handleMenu}
+                    onClick={handleMenuRaces}
                     color="inherit"
                     className={`${classes.icon} ${classes.headerBarDesktop}`}
                     // variant="h5"
@@ -176,8 +202,8 @@ export const HeaderBar = () => {
                 </Button>
                 <Menu
                     id="menu-appbar"
-                    anchorEl={anchorEl}
-                    open={open}
+                    anchorEl={anchorElRaces}
+                    open={openRaces}
                     onClose={handleClose}
                 >
                     {raceList.map((race, index) => {
@@ -201,6 +227,14 @@ export const HeaderBar = () => {
                             </ListItemIcon>
                             <ListItemText>
                                 Standings
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem button component="a" href="/teams" >
+                            <ListItemIcon>
+                                <AllInclusiveIcon />
+                            </ListItemIcon>
+                            <ListItemText>
+                                Teams
                             </ListItemText>
                         </ListItem>
                         <ListItem button component="a" href="/races" >

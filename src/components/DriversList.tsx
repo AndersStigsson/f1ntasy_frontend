@@ -27,9 +27,6 @@ export const DriversList = (props : any) => {
 
     return(
         <Grid container>
-            <Grid item xs={12}>
-                <SaveButton />
-            </Grid>
             <List >
             {
                 drivers.map((driver:Driver) => {
@@ -38,9 +35,6 @@ export const DriversList = (props : any) => {
                 })
             }
             </List>
-            <Grid item xs={12}>
-                <SaveButton />
-            </Grid>
         </Grid>
     )
 }

@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
         background: "linear-gradient(to bottom,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%)",
         color: "#FFFFFF"
       },
+    awaitingText: {
+        backgroundColor: "#FA6607",
+        color: "#FFFFFF"
+    }
 }));
 
 const capitalizeFirstLetter = (word: string) => {
@@ -44,7 +48,12 @@ const capitalizeFirstLetter = (word: string) => {
     return (
         <div className={classes.image}>
             <HeaderBar />
-
+            {
+                guessResult.awaitingResults && 
+                <Typography variant="h4" className={classes.awaitingText}>
+                    We are still awaiting results from at least one race. Below table may show incorrect data.
+                </Typography>
+            }
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
@@ -61,24 +70,36 @@ const capitalizeFirstLetter = (word: string) => {
                             <TableCell className={classes.head}>
                                 Total points
                             </TableCell>
+                            <TableCell className={classes.head}>
+                                Total races
+                            </TableCell>
+                            <TableCell className={classes.head}>
+                                Avg. Pts per race
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Object.keys(guessResult.userPoints).map((user : any) => {
+                        {guessResult.userPoints.map((user : any) => {
                         
                         return(
                             <TableRow>
                                 <TableCell>
-                                    {capitalizeFirstLetter(user)}
+                                    {capitalizeFirstLetter(user.name)}
                                 </TableCell>
                                 <TableCell>
-                                    {guessResult.userPoints[user].correctPos}
+                                    {user.correctPos}
                                 </TableCell>
                                 <TableCell>
-                                    {guessResult.userPoints[user].correctTop5}
+                                    {user.correctTop5}
                                 </TableCell>
                                 <TableCell>
-                                    {guessResult.userPoints[user].totalPoints}
+                                    {user.totalPoints}
+                                </TableCell>
+                                <TableCell>
+                                    {user.totalRaces}
+                                </TableCell>
+                                <TableCell>
+                                    {parseInt(user.totalPoints) / parseInt(user.totalRaces)}
                                 </TableCell>
                             </TableRow>
                         )

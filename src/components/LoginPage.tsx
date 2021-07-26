@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import logo from '../media/f1ntasy_nofont.svg';
 import fetch from 'node-fetch';
 import { useHistory } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 const useStyles = makeStyles((theme) => ({
     LoginPage: {
         // height: "300px",
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const LoginPage = (props: any) => {
+export const LoginPage = (props : any) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
@@ -63,7 +63,8 @@ export const LoginPage = (props: any) => {
         .then((json : any) => {
             if(json.loggedIn){
                 console.log("Successfully logged in");
-                history.push("/frontpage")
+                props.setToken(json.token);
+                localStorage.setItem("userid", json.user);
             } else {
                 console.log("Wrong username or password");
             }

@@ -12,6 +12,7 @@ import { Results } from './components/Results';
 import { RaceListPage } from './components/RaceListPage';
 import { makeStyles } from '@material-ui/core';
 import bgImage from './media/f1bg.svg';
+import useToken from './components/useToken';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -21,14 +22,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export const App = () => {
   const classes = useStyles();
+  const { token, setToken } = useToken();
+  console.log(token);
+  if(!token) {
+    return <LoginPage setToken={setToken} />
+  }
 	return(
     <div className={classes.image}>
     <Router>
       <Switch>
         <Route exact path="/">
-          <LoginPage />
+        <SelectionPage />
         </Route>
         <Route path="/race/:id">
           <RacePage />

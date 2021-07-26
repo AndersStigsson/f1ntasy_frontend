@@ -6,8 +6,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             display: "none"
         },
-        width: theme.spacing(6),
+        width: theme.spacing(8),
         height: theme.spacing(6),
+        paddingLeft: theme.spacing(2)
     },
     flagMobile: {
         display: "none",
