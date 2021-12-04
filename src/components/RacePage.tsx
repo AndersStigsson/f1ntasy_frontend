@@ -169,7 +169,7 @@ function secondsToDhms(seconds: number) {
             setTimeUntilDeadline(tempLastGuessTime.getTime() - new Date().getTime())
         }, 60000);
         return () => clearInterval(interval);
-    },[manuallyChanged, id, quali]);
+    },[manuallyChanged, quali]);
     
     console.log(`last guess time is ${lastGuessTime}`);
     const handleSubmit = (raceId: number, guesses : Array<Driver>) => {
