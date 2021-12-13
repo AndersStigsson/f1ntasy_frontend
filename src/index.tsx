@@ -13,6 +13,7 @@ import { RaceListPage } from './components/RaceListPage';
 import { makeStyles } from '@material-ui/core';
 import bgImage from './media/f1bg.svg';
 import useToken from './components/useToken';
+import {UserPodium} from './components/UserPodium';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -35,7 +36,7 @@ export const App = () => {
     <Router>
       <Switch>
         <Route exact path="/">
-        <SelectionPage />
+	<UserPodium />
         </Route>
         <Route path="/race/:id">
           <RacePage />
@@ -47,7 +48,7 @@ export const App = () => {
           <RacePage />
         </Route>
         <Route exact path="/frontpage">
-          <SelectionPage />
+		<UserPodium />
         </Route>
         <Route path="/standings">
           <Results>

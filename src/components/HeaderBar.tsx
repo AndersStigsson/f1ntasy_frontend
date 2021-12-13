@@ -151,9 +151,15 @@ export const HeaderBar = () => {
                 <Link href="/frontpage"> <img src={logo} className={classes.logo}></img></Link>
                 
                     <Typography className={classes.title} variant="h6" noWrap >
+		    	{nextRace !== undefined ?
                         <Link  href={`/race/${nextRace?.id}`} className={classes.nextRace}>
                             Next race: {nextRace?.name} on {nextRace !== undefined && new Date(nextRace?.date).toLocaleString("SV-SE").substring(0,16)}
                         </Link>
+			:
+			<Typography>
+				Säsongen är slut, tack för i år!
+			</Typography>
+			}
                     </Typography>
                 
                 <Link href={"/standings"} className={classes.headerBarDesktop}>
