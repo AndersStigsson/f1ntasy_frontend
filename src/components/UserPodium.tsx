@@ -77,30 +77,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 export const UserPodium = (props: any) => {
-    const classes = useStyles();
-    return (
-        
-        <div className={classes.fullSize}>
-            <HeaderBar />
-            <div className={classes.podium} >
-                
-		<Grid container>
-                <Grid item xs={12} className={classes.winner}>
-               		Adam Drechsel 
-                </Grid>
-		<Grid item xs={6} className={classes.second}>
-			Anders Stigsson
-		</Grid>
-		<Grid item xs={6} className={classes.third}>
-			Patrik Henricsson
-		</Grid>
-		</Grid>	
-            </div>
-	    <div className={classes.rightSideText}>
-	    	<Typography variant="h4">
-	    	Tack för den här säsongen!
-		</Typography>
+	const classes = useStyles();
+	return (
+
+		<div className={classes.fullSize}>
+			<HeaderBar />
+			<div className={classes.rightSideText}>
+				<Typography variant="h4">
+					Ny säsong, nu kör vi!
+				</Typography>
+			</div>
 		</div>
-        </div>
-    )
+	)
 }
